@@ -8,7 +8,7 @@ client = MongoClient(DB_ALMA)
 db=client["db_alma"]
 
 # makes the query of all users
-@app.route("/users")
+@app.route("/users/")
 def get_usuarios():
     usuarios=db.usuarios.find( { } ,{"_id":0,"name":1})
     usuarios='{"users":'+dumps(usuarios)+'}'

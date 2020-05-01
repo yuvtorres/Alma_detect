@@ -13,7 +13,7 @@ db=client["db_alma"]
 @app.route("/sentiment/<chat>/")
 def sentiment_chat(chat):
     mensajes=db.mensajes.find({"chat":chat},{"_id":0,"user":1,"content":1})
-    salida=list(mensajes)
+    salida=dict(mensajes)
     return salida
 
 
