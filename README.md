@@ -27,14 +27,23 @@ using
 
 #### Messages
 
-`/message/` 			-> Endpoint to send messages, the message should be a POST JSON
-				with the following structure: {"chat":<chat_name>, "user":<user_name>, "content":<message> }
+`/message/` 			-> Endpoint to send messages, the message 
+				should be a POST JSON with the following 
+				structure: 
+
+	{"chat":<chat_name>, "user":<user_name>, "content":<message> }
 
 `/message/<chat_name>`		-> query all the messages in <chat_name>
 
 #### Tools
 
 `/genera_chat/`			-> Fill ramdomly the db from quotes-100.json 
+				   the proccess could take time. 
+				It can receive optional argument as GET params:
+				- num_chats (default 20) : Number of chats to create
+				- num_users (default 140) : Number of total users to distribuite
+				  in the chat
+
 
 
 ## Test it
