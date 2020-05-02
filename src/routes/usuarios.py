@@ -23,6 +23,7 @@ def insert_user(name):
             return {"error":"Name already in use"}
 
         usuario_nuevo=db.usuarios.insert_one({"name":name}).inserted_id
+        print('new user:',usuario_nuevo)
         return {"success":f"the user {name} was created"}
     return {"error":"The name can have maximum 30 characters"}
 

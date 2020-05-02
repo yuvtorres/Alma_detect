@@ -32,6 +32,9 @@ using
 
 `/message/<chat_name>`		-> query all the messages in <chat_name>
 
+#### Tools
+
+`/genera_chat/`			-> Fill ramdomly the db from quotes-100.json 
 
 
 ## Test it

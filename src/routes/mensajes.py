@@ -21,7 +21,7 @@ def send_messages():
                     "chat": mensaje['chat'],
                     "content": mensaje['content'] } )
                 return  {"Success": f"The message was send with id:{res}"}
-                
+
             return {"error":"Please check if the user exist and insert the user in the chat"}
         return {"error":"Please create first the chat"}
     return {"error":"please past a json object by post"}
