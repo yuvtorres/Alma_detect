@@ -7,6 +7,7 @@
 
 <script>
 
+<!-- ***  get user script section ***-->
 var xhttp = new XMLHttpRequest();
 xhttp.onreadystatechange = function() {
 	if (this.readyState == 4 && this.status == 200) {
@@ -25,10 +26,11 @@ function disp_users(arr) {
         out += '<option value="' + arr.users[i]['name'] + '">' +
         arr.users[i]['name'] + '</option>';
     }
-	out='<select>'+out+'</select>'
+	out='<select id="id_user">'+out+'</select>'
     document.getElementById("users").innerHTML = out;
 }
 
+<!-- ***  get chat script section ***-->
 
 var xhttp = new XMLHttpRequest();
 xhttp.onreadystatechange = function() {
@@ -43,14 +45,48 @@ xhttp.send();
 function disp_chats(arr) {
     var out = "";
     var i;
-	console.log(arr.chats[0]['chat']);
     for(i = 0; i < arr.chats.length; i++) {
         out += '<option value="' + arr.chats[i]['chat'] + '">' +
         arr.chats[i]['chat'] + '</option>';
     }
-	out='<select>'+out+'</select>'
+	out='<select id="id_chat">'+out+'</select>'
     document.getElementById("chats").innerHTML = out;
 }
+
+<!-- ***  get message script section ***-->
+function carga_mensajes_chat(){
+    actualiza_imagen()
+    conn= "message/"+document.getElementById("id_chat").value+'/'
+    muestra_mensajes("chat",conn,"user")
+}
+function carga_mensajes_user(){
+    conn="message_u/"+document.getElementById("id_user").value+'/'
+    muestra_mensajes("user",conn,"chat")
+}
+
+function muestra_mensajes(tipo,conn,consulta){
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var myArr = JSON.parse(this.responseText);
+            disp_message(myArr,tipo,consulta);
+        }
+    };
+    xhttp.open("GET",conn , true);
+    xhttp.send();
+}
+
+function disp_message(arr,tipo,consulta) {
+    var out = "<tr><th>"+consulta+"</th><th>message</th>";
+    var i;
+    for(i = 0; i < arr.messages.length; i++) {
+        out += '<tr> <td>' + arr.messages[i][consulta] + '</td><td>' +
+            arr.messages[i]['content'] + '</td><tr>';
+    }
+	out='<table>'+out+'</table>'
+    document.getElementById("messages").innerHTML = out;
+}
+
 
 </script>
 </head>
@@ -59,17 +95,38 @@ function disp_chats(arr) {
 
 <h1>API sentiments in chat</h1>
 
-<h2>chats</h2>
-<div id="chats"></div>
-
-<h2>users</h2>
-<div id="users"></div>
-
-
-<h2>messages</h2>
-
 <h2>sentiments</h2>
 
+<h3>chats</h3>
+<div id="chats"><select "id_chat"></select></div>
+<p> Load the messages 
+<button type="button" onclick="carga_mensajes_chat()">load</button>
+<p id="chat_titulo">
+<img src="chat_sentiment" id="chat_sent" alt="chat sentiments" > 
+
+<h3>users</h3>
+<div id="users"></div>
+<p> Load the messages 
+<button type="button" onclick="carga_mensajes_user()">load</button>
+
+<h3>messages</h3>
+<button onclick="esconde_mensajes()">hide/show the messages</button>
+<div id="messages"></div>
 
 </body>
+
+<script>
+    function esconde_mensajes() {
+        var x = document.getElementById("messages");
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
+    }
+
+    function actualiza_imagen() {
+        document.getElementById("chat_sent").src += `?v=${new Date().getTime()}`;
+    }
+</script>
 </html> 

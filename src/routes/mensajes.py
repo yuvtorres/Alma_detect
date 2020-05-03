@@ -49,3 +49,23 @@ def consulta_chat(chat):
         return True
     return False
 
+
+# query all messages of <user>
+@app.route("/message_u/<user>/")
+def message_user(user):
+    if consulta_user(user):
+        mensajes=db.mensajes.find({"user":user},{"_id":0,"chat":1, "content":1})
+        mensajes='{"messages":'+dumps(mensajes)+'}'
+        mensajes_j=json.loads(mensajes)
+        return mensajes_j
+
+    return {"error":f"The user {user} don't exist"}
+
+# function that return True if the user is already
+# in DB False on the contrary
+def consulta_user(user):
+    if db.usuarios.find_one({"name":user}):
+        return True
+    return False
+
+

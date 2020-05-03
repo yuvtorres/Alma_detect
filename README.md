@@ -33,7 +33,9 @@ using
 
 	{"chat":<chat_name>, "user":<user_name>, "content":<message> }
 
-`/message/<chat_name>`		-> query all the messages in <chat_name>
+`/message/<chat_name>/`		-> query all the messages in <chat_name>
+
+`/message_u/<user_name>/`	-> query with the messages of <user_name>
 
 #### Tools
 
@@ -44,6 +46,10 @@ using
 				- num_users (default 140) : Number of total users to distribuite
 				  in the chat
 
+`/sentiment/<chat_name>/'	-> Return the sentiment analysis of the chat <chat_name>
 
+`/sentiment/			-> Makes the general analisys of the chats and return a json
+				   with the mean values (positive, negative, neutro, content)
+				   and a link with a graph
 
 ## Test it

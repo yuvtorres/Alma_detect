@@ -5,4 +5,5 @@ dnspython
 requests
 flask_cors
 nltk
-
+pandas
+numpy
