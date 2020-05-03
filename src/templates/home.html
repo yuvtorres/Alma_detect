@@ -1,0 +1,75 @@
+ <!DOCTYPE html>
+<html>
+<head>
+
+<meta charset="utf-8" />
+<title>API Alma</title>
+
+<script>
+
+var xhttp = new XMLHttpRequest();
+xhttp.onreadystatechange = function() {
+	if (this.readyState == 4 && this.status == 200) {
+	var myArr = JSON.parse(this.responseText);
+        disp_users(myArr);
+    	}
+};
+xhttp.open("GET", "http://localhost:3500/users/", true);
+xhttp.send();
+
+function disp_users(arr) {
+    var out = "";
+    var i;
+	console.log(arr.users[0]['name']);
+    for(i = 0; i < arr.users.length; i++) {
+        out += '<option value="' + arr.users[i]['name'] + '">' +
+        arr.users[i]['name'] + '</option>';
+    }
+	out='<select>'+out+'</select>'
+    document.getElementById("users").innerHTML = out;
+}
+
+
+var xhttp = new XMLHttpRequest();
+xhttp.onreadystatechange = function() {
+	if (this.readyState == 4 && this.status == 200) {
+	var myArr = JSON.parse(this.responseText);
+        disp_chats(myArr);
+    	}
+};
+xhttp.open("GET", "http://localhost:3500/chats/", true);
+xhttp.send();
+
+function disp_chats(arr) {
+    var out = "";
+    var i;
+	console.log(arr.chats[0]['chat']);
+    for(i = 0; i < arr.chats.length; i++) {
+        out += '<option value="' + arr.chats[i]['chat'] + '">' +
+        arr.chats[i]['chat'] + '</option>';
+    }
+	out='<select>'+out+'</select>'
+    document.getElementById("chats").innerHTML = out;
+}
+
+</script>
+</head>
+
+<body>
+
+<h1>API sentiments in chat</h1>
+
+<h2>chats</h2>
+<div id="chats"></div>
+
+<h2>users</h2>
+<div id="users"></div>
+
+
+<h2>messages</h2>
+
+<h2>sentiments</h2>
+
+
+</body>
+</html> 

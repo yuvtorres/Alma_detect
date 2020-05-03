@@ -4,6 +4,7 @@ from src.config import DB_ALMA
 from bson.json_util import dumps
 import json
 import nltk
+nltk.download('vader_lexicon')
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 
 client = MongoClient(DB_ALMA)
