@@ -14,7 +14,7 @@ xhttp.onreadystatechange = function() {
         disp_users(myArr);
     	}
 };
-xhttp.open("GET", "http://localhost:3500/users/", true);
+xhttp.open("GET", "http://127.0.0.1:3500/users/", true);
 xhttp.send();
 
 function disp_users(arr) {
@@ -37,7 +37,7 @@ xhttp.onreadystatechange = function() {
         disp_chats(myArr);
     	}
 };
-xhttp.open("GET", "http://localhost:3500/chats/", true);
+xhttp.open("GET", "http://127.0.0.1:3500/chats/", true);
 xhttp.send();
 
 function disp_chats(arr) {
