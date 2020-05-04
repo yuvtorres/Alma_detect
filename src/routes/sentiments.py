@@ -1,12 +1,10 @@
 from src.app import app
 from pymongo import MongoClient
 from src.config import DB_ALMA
-from bson.json_util import dumps
 from flask import jsonify
 import pandas as pd
 import numpy as np
 import seaborn as sns
-import json
 import nltk
 import matplotlib.pyplot as plt
 
@@ -72,5 +70,20 @@ def sentiment_chat(chat,graph=True):
             "Neg":round(df.negative.mean(),4),
             "neu":round(df.neutro.mean(),4),
             "compound":round(df.compound.mean(),4)}
+
+
+## Calculate the sentiment of all chats
+@app.route("/sentiment/")
+def all_sentiment():
+    chats=list(db.chats.find({},{"_id":0,"chat":1}))
+    sentiments=[ sentiment_chat(chat['chat'],False) for chat in chats ]
+
+    print(sentiments[0])
+    return {"sentiment":sentiments[0]}
+
+
+
+
+
 
 
