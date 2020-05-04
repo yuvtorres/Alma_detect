@@ -51,10 +51,10 @@ def sentiment_chat(chat,graph=True):
 
     # Write in sentiment colletion
     chat_sentiment={"chat":chat,
-            "Pos":df.positive.mean(),
-            "Neg":df.negative.mean(),
-            "neu":df.neutro.mean(),
-            "compound":df.compound.mean()}
+            "Pos":round(df.positive.mean(),4),
+            "Neg":round(df.negative.mean(),4),
+            "neu":round(df.neutro.mean(),4),
+            "compound":round(df.compound.mean(),4)}
 
     # in case the graph is True, it checks if chat as bee already
     # inserted in sentiment
@@ -68,9 +68,9 @@ def sentiment_chat(chat,graph=True):
         print(f'*** write sentiments of chat {chat}')
 
     return {"chat":chat,
-            "Pos":df.positive.mean(),
-            "Neg":df.negative.mean(),
-            "neu":df.neutro.mean(),
-            "compound":df.compound.mean()}
+            "Pos":round(df.positive.mean(),4),
+            "Neg":round(df.negative.mean(),4),
+            "neu":round(df.neutro.mean(),4),
+            "compound":round(df.compound.mean(),4)}
 
 

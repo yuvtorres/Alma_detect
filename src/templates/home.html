@@ -11,10 +11,10 @@
 var xhttp = new XMLHttpRequest();
 xhttp.onreadystatechange = function() {
 	if (this.readyState == 4 && this.status == 200) {
-	var myArr = JSON.parse(this.responseText);
-        disp_users(myArr);
-    	}
-};
+		var myArr = JSON.parse(this.responseText);
+		disp_users(myArr);
+		}
+	};
 xhttp.open("GET", "users/", true);
 xhttp.send();
 
@@ -26,7 +26,7 @@ function disp_users(arr) {
         out += '<option value="' + arr.users[i]['name'] + '">' +
         arr.users[i]['name'] + '</option>';
     }
-	out='<select id="id_user">'+out+'</select>'
+    out='<select id="id_user">'+out+'</select>'
     document.getElementById("users").innerHTML = out;
 }
 
@@ -53,11 +53,15 @@ function disp_chats(arr) {
     document.getElementById("chats").innerHTML = out;
 }
 
-<!-- ***  get message script section ***-->
+
+<!-- ***  get message script section and load buttons   *** -->
+
 function carga_mensajes_chat(){
-    actualiza_imagen()
-    conn= "message/"+document.getElementById("id_chat").value+'/'
-    muestra_mensajes("chat",conn,"user")
+    conn="sentiment/"+document.getElementById("id_chat").value+'/';
+    actualiza_sentiments_chat(conn);
+    actualiza_imagen();
+    conn= "message/"+document.getElementById("id_chat").value+'/';
+    muestra_mensajes("chat",conn,"user");
 }
 function carga_mensajes_user(){
     conn="message_u/"+document.getElementById("id_user").value+'/'
@@ -101,7 +105,7 @@ function disp_message(arr,tipo,consulta) {
 <div id="chats"><select "id_chat"></select></div>
 <p> Load the messages 
 <button type="button" onclick="carga_mensajes_chat()">load</button>
-<p id="chat_titulo">
+<p id="chat_titulo"></p>
 <img src="chat_sentiment" id="chat_sent" alt="chat sentiments" > 
 
 <h3>users</h3>
@@ -126,7 +130,27 @@ function disp_message(arr,tipo,consulta) {
     }
 
     function actualiza_imagen() {
-        document.getElementById("chat_sent").src += `?v=${new Date().getTime()}`;
+	    var image = document.getElementById("chat_sent");
+	    image.src = image.src.split("?")[0] + "?" + new Date().getTime();
     }
+
+function actualiza_sentiments_chat(conn){
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			var myArr = JSON.parse(this.responseText);
+			disp_sentiment(myArr);
+			}
+		};
+	xhttp.open("GET", conn, true);
+	xhttp.send();
+}
+
+function disp_sentiment(myArr){
+	var out = " The mean values in the chat "+myArr['chat']+" are: <br>";
+	out+= " Neg: "+myArr['Neg']+"   --   Pos: " +myArr['Pos'] +"<br>";
+	out+= " Neu: "+ myArr['neu']+"   --   Compound: "+ myArr['compound'];
+    	document.getElementById("chat_titulo").innerHTML = out;
+}
 </script>
 </html> 
